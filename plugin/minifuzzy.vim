@@ -13,12 +13,21 @@ command! FzyLines                       finders.Lines()
 command! FzyGitFiles                    finders.GitFiles()
 command! FzyCommand                     finders.Command()
 
-nnoremap <leader>ff <Cmd>FzyFind<CR>
-nnoremap <C-p>      <Cmd>FzyFind<CR>
-nnoremap <leader>fb <Cmd>FzyBuffers<CR>
-nnoremap <leader>fm <Cmd>FzyMRU<CR>
-nnoremap <leader>fl <Cmd>FzyLines<CR>
-nnoremap <leader>fg <Cmd>FzyGitFiles<CR>
+nnoremap <Plug>(FzyFind) <Cmd>FzyFind<CR>
+nnoremap <Plug>(FzyBuffers) <Cmd>FzyBuffers<CR>
+nnoremap <Plug>(FzyMRU) <Cmd>FzyMRU<CR>
+nnoremap <Plug>(FzyLines) <Cmd>FzyLines<CR>
+nnoremap <Plug>(FzyGitFiles) <Cmd>FzyGitFiles<CR>
+nnoremap <Plug>(FzyCommand) <Cmd>FzyCommand<CR>
 
-cnoremap <silent> <C-b>   <C-\>eminifuzzy#finders#StoreOldCmd()<CR><ESC>:MinifuzzyCommand<CR>
-cnoremap <silent> <C-Tab> <C-\>eminifuzzy#finders#StoreOldCmd()<CR><ESC>:MinifuzzyCommand<CR>
+if g:->get('minifuzzy_all_mapps', 1)
+    nnoremap <C-p>      <Plug>(FzyFind)
+    nnoremap <leader>fb <Plug>(FzyBuffers)
+    nnoremap <leader>ff <Plug>(FzyFind)
+    nnoremap <leader>fg <Plug>(FzyGitFiles)
+    nnoremap <leader>fl <Plug>(FzyLines)
+    nnoremap <leader>fm <Plug>(FzyMRU)
+endif
+
+cnoremap <silent> <C-b>   <C-\>eminifuzzy#finders#StoreOldCmd()<CR><ESC>:FzyCommand<CR>
+cnoremap <silent> <C-Tab> <C-\>eminifuzzy#finders#StoreOldCmd()<CR><ESC>:FzyCommand<CR>

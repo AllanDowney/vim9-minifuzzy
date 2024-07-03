@@ -38,3 +38,12 @@ The following mappings can be used to fuzzy find:
 - `<leader>fl` -- Lines in the current buffer
 
 ---
+
+Issue #4
+
+> A couple feature requests, posting all in here to avoid spamming multiple issues:
+>
+> - [x] Allow disabling all the default bindings via something like `g:minifuzzy#disable_default_mapping` so user can set up his own.
+> - [ ] Open selection in a new tab (via `ctrl-t` perhaps)
+> - [ ] Search the _content_ of a git repo (akin to `git grep`)
+> - [ ] Recursively search the content of the current directory. Something akin to `grep -Hnri`. This one is not as important for me as `git grep`.

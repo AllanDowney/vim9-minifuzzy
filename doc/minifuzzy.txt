@@ -118,13 +118,27 @@ The bar indicates where the cursor will be placed.
 --------------------------------------------------------------------
 2.4. Variables                                    *MinifuzzyVariables*
 
-					*g:minifuzzy_MRU_limit*
+                                        *g:minifuzzy_MRU_limit*
 |g:minifuzzy_MRU_limit|     number    (default 10)
     The most recently used files numbers for |FzyMRU|
 >
         vim9script
         g:minifuzzy_MRU_limit = 50
+<
+
+                                        *g:minifuzzy_all_mapps*
+|g:minifuzzy_all_mapps|     boolean   (default on)
+    Allow disabling all the default bindings. So user can set up his
+    own.
 >
+        vim9script
+        nnoremap <leader>ff <Plug>(FzyFind)
+        nnoremap <leader>fb <Plug>(FzyBuffers)
+        nnoremap <leader>fm <Plug>(FzyMRU)
+        nnoremap <leader>fl <Plug>(FzyLines)
+        nnoremap <leader>fg <Plug>(FzyGitFiles)
+        nnoremap <leader>fc <Plug>(FzyCommand)
+<
 
 ====================================================================
 3. Custom Prompts                                    *MinifuzzyCustom*
