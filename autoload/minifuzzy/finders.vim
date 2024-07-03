@@ -11,7 +11,8 @@ export def GitFiles()
 enddef
 
 export def MRU()
-    InitFuzzyFind(utils.GetMRU(10), { title: 'MRU' })
+    InitFuzzyFind(utils.GetMRU(
+		get(g:, 'minifuzzy_MRU_limit', 10)), { title: 'MRU' })
 enddef
 
 # Command functions
