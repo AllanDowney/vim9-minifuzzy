@@ -88,7 +88,7 @@ The bar indicates where the cursor will be placed.
 2.3. Commands                                      *MinifuzzyCommands*
 
 |:FzyFind| [directory]
-    Fuzzy find through files using the Unix `find` command in the
+    Fuzzy find through files using the Unix `fd` command in the
     provided directory or in the current working directory if
     excluded. Use 'wildignore'.
     Mapped to: <leader>ff or <C-p>
