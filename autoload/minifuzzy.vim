@@ -203,9 +203,13 @@ export def InitFuzzyFind(values: list<string>, options: dict<any>)
         mapping: 0, 
         filtermode: 'a',
         minwidth: max_option_length,
+        maxwidth: winwidth(0) - 10,
         maxheight: results_to_display + 1,
         border: [],
         borderchars: ['─', '│', '─', '│', '╭', '╮', '╯', '╰'],
+        padding: [0, 4, 0, 1],
+        scrollbar: 0,
+        wrap: 0,
         title: $' {title} {total_results}/{total_results} ',
     }
     const popup_id = popup_create(['> '] + output_list->mapnew((_, v) => Format_callback(v)), popup_opts)
