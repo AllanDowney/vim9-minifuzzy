@@ -4,10 +4,12 @@ vim9script
 export const EditArg = (arg: string): string => execute($"edit {arg}")
 export const SplitArg = (arg: string): string => execute($"split {arg}")
 export const VsplitArg = (arg: string): string => execute($"vsplit {arg}")
+export const TabeditArg = (arg: string): string => execute($"tabedit {arg}")
 export const EchoArg = (arg: string): string => execute($"echo {string(arg)}", "")
 export const GotoLineNumberArg = (arg: string): string => execute($"exec 'normal m`' | :{arg} | norm zz")
 export const SplitLineNumberArg = (arg: string): string => execute($"exec 'normal m`' | sp | :{arg} | norm zz")
 export const VsplitLineNumberArg = (arg: string): string => execute($"exec 'normal m`' | vs | :{arg} | norm zz")
+export const TabeditLineNumberArg = (arg: string): string => execute($"exec 'normal m`' | tabe % | :{arg} | norm zz")
 
 # Format callbacks
 export const DefaultFormatArg = (arg: string): string => arg

@@ -62,8 +62,9 @@ The following mappings can be used to initiate a fuzzy find:
 While the minifuzzy.vim window is open:
 
     <CR> ............. Select the currently highlighted selection
-    <C-x> ............ Select the currently highlighted selection
-    <C-v> ............ Select the currently highlighted selection
+    <C-x> ............ Same as above but opens in a split
+    <C-v> ............ Same as above but opens in a vertical split
+    <C-t> ............ Same as above but opens in a tabpage
     <C-u> ............ Clear the search query
     <ESC> ............ Close the minifuzzy.vim window
     <C-p> or <Up> .... Put the cursor over the previous option
@@ -76,8 +77,8 @@ typed token.
     :col<C-Tab>
 
 This will create a fuzzy finder prompt with the values that would
-be expected when trying to autocomplete: |colder| and |colorscheme|.
-Upon selecting a command with <CR> (for example 'colorscheme'), the
+be expected when trying to autocomplete: `colder` and `colorscheme`.
+Upon selecting a command with <CR> (for example `colorscheme`), the
 new command line will look like this:
 
     :colorscheme|
@@ -132,6 +133,8 @@ The bar indicates where the cursor will be placed.
     own.
 >
         vim9script
+        g:minifuzzy_all_mapps = 0
+        # custom key mapping
         nnoremap <leader>ff <Plug>(FzyFind)
         nnoremap <leader>fb <Plug>(FzyBuffers)
         nnoremap <leader>fm <Plug>(FzyMRU)
@@ -147,7 +150,7 @@ minifuzzy.vim is a general-purpose wrapper for Vim's builtin fuzzy
 finding capabilities and is meant to be extended easily.
 
 Fuzzy finding is initiated with a call to |InitFuzzyFind()| which
-has the following signature in Vim9 script:
+has the following signature in |Vim9| script:
 >
     def InitFuzzyFind(values: list<string>, options: dict<any>)
 <
@@ -158,6 +161,7 @@ can contain the following keys:
     exec_cb:            func(string): string
     ctrl_x_cb:          func(string): string
     ctrl_v_cb:          func(string): string
+    ctrl_t_cb:          func(string): string
     cancel_cb:          func
     title:              string
     filetype:           string
@@ -171,14 +175,14 @@ not value. By default, format_cb(value) == value.
 
 |exec_cb| gets called when <CR> is pressed, with the currently
 selected value passed as the only argument. Two additional execution
-callbacks |ctrl_x_cb| and |ctrl_v_cb| can be called when <C-x> or
-<C-v> are pressed, respectively.
+callbacks |ctrl_x_cb| |ctrl_v_cb| and |ctrl_t_cb| can be called when
+<C-x> <C-v> or <C-t> are pressed, respectively.
 
 Additionally, if needed, |cancel_cb| will be called after <Esc> is
 pressed and the window is closed.
 
 |title| will be used as the title for the popup window. If |filetype|
-if provided and not an empty string, the |filetype| will be applied
+if provided and not an empty string, the 'filetype' will be applied
 to the popup window, to allow syntax highlighting and such.
 
 |results_to_display| denotes how many lines in the popup window are

@@ -11,6 +11,7 @@ var max_option_length = 0
 var On_enter_callback: func(string): string
 var On_ctrl_x_callback: func(string): string
 var On_ctrl_v_callback: func(string): string
+var On_ctrl_t_callback: func(string): string
 var On_cancel_callback: func
 var Format_callback: func(string): string
 var selection_index = 0
@@ -76,7 +77,8 @@ def FilterCallback(winid: number, key: string): bool
 
     # Select best match and exit close window
     # <CR>, <C-V>, <C-X>
-    if key == "\<CR>" || key == "\<C-x>" || key == "\<C-v>" # <Enter>
+    if key == "\<CR>" || key == "\<C-x>" || key == "\<C-v>" || key == "\<C-t>"
+		# <Enter>
         # No need to update display_matches, nothing will be displayed after
         # <CR> is pressed.
         UpdateMatches(search_string)
@@ -86,6 +88,8 @@ def FilterCallback(winid: number, key: string): bool
                 On_ctrl_x_callback(matches[selection_index])
             elseif key == "\<C-v>"
                 On_ctrl_v_callback(matches[selection_index])
+            elseif key == "\<C-t>"
+                On_ctrl_t_callback(matches[selection_index])
             else
                 On_enter_callback(matches[selection_index])
             endif
@@ -167,6 +171,7 @@ const fuzzy_find_default_options = {
     exec_cb: callbacks.EditArg,            # <CR> callback, exec_cb(val) is executed
     ctrl_x_cb: callbacks.SplitArg,         # <C-X> Callback, ctrl_x_cb(val) is executed
     ctrl_v_cb: callbacks.VsplitArg,        # <C-V> Callback, ctrl_v_cb(val) is executed
+    ctrl_t_cb: callbacks.TabeditArg,        # <C-T> Callback, ctrl_t_cb(val) is executed
     cancel_cb: callbacks.DefaultCancel,    # <Esc> Callback, cancel_cb() is executed
     title: 'Minifuzzy',                    # Title for the popup window
     filetype: '',                          # If non-empty, use filetype syntax highlight in window
@@ -188,6 +193,7 @@ export def InitFuzzyFind(values: list<string>, options: dict<any>)
     On_enter_callback = opts.exec_cb
     On_ctrl_x_callback = opts.ctrl_x_cb
     On_ctrl_v_callback = opts.ctrl_v_cb
+    On_ctrl_t_callback = opts.ctrl_t_cb
     On_cancel_callback = opts.cancel_cb
     Format_callback = opts.format_cb
     max_option_length = max(output_list->mapnew((_, v) => len(Format_callback(v))))

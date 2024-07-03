@@ -28,6 +28,7 @@ export def Buffers()
         exec_cb: (s) => execute($"buffer {s}"),
         ctrl_x_cb: (s) => execute($"sp | buffer {s}"),
         ctrl_v_cb: (s) => execute($"vs | buffer {s}"),
+        ctrl_t_cb: (s) => execute($"tabe | buffer {s}"),
         title: 'Buffers' })
 enddef
 
@@ -36,6 +37,7 @@ export def Lines()
         exec_cb: callbacks.GotoLineNumberArg, 
         ctrl_x_cb: callbacks.SplitLineNumberArg,
         ctrl_v_cb: callbacks.VsplitLineNumberArg,
+        ctrl_t_cb: callbacks.TabeditLineNumberArg,
         format_cb: callbacks.GetBufLineByNumber,
         filetype: &filetype,
         title: $'Lines: {expand("%:t")}' })
