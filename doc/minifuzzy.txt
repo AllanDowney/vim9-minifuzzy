@@ -1,4 +1,4 @@
-*minifuzzy.txt* Simple Vim9 fuzzy finder wrapper     Last change: 2024 Jul 03
+*minifuzzy.txt*     Simple Vim9 fuzzy finder wrapper  Last change: 2024 Jul 03
 
                        _       _  __                     ~
              _ __ ___ (_)_ __ (_)/ _|_   _ _________   _ ~
@@ -53,7 +53,8 @@ Arrow keys also work.
 
 The following mappings can be used to initiate a fuzzy find:
 
-    <leader>ff or <C-p> .... Files in current working directory
+    <leader>ff ............. Files in current working directory
+    <C-p> .................. Files in print working directory($PWD)
     <leader>fb ............. Buffers
     <leader>fm ............. Most recently used files
     <leader>fl ............. Lines in the current buffer
@@ -88,12 +89,26 @@ The bar indicates where the cursor will be placed.
 --------------------------------------------------------------------
 2.3. Commands                                      *MinifuzzyCommands*
 
-|:FzyFind| [directory]
+|:FzyFind| [{directory}]
     Fuzzy find through files using the Unix `fd` command in the
     provided directory or in the current working directory if
     excluded. Use 'wildignore'.
-    Mapped to: <leader>ff or <C-p>
+    {directory} can have the following values:
+        ''      The current directory (Default and can be omitted)
+                Mapped to: <leader>ff
+        'PWD'   The `$PWD` directory
+                Mapped to: <C-p>
+        '1'     The directory one level above the current file
+        '2'     The directory two levels up to the current file
+        '3'     The upper three directories of the current file
 
+    You can customize. e.g: >
+
+        nnoremap <Leader>fp <Cmd>FzyFind<Space>PWD<CR>
+        nnoremap <Leader>f1 <Cmd>FzyFind<Space>1<CR>
+        nnoremap <Leader>f2 <Cmd>FzyFind<Space>2<CR>
+        nnoremap <Leader>f3 <Cmd>FzyFind<Space>3<CR>
+<
 |:FzyBuffers|
     Fuzzy find through buffers currently listed. Excludes the
     current buffer from the list. If there is only one buffer, this

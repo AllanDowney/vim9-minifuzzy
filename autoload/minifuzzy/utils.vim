@@ -22,18 +22,32 @@ export def GetCurrentDirectory(): string
 enddef
 
 export def BuildFindCommand(root: string): string
-    if &wildignore == ''
-        var droot = ''
-        if root != '.'
-            droot = '. ' .. root
-        endif
-        return $'fd -d4 -tf {droot}'
-    else
-		const ignores = &wildignore->split(",")
-		final ignore_dirsfiles = ignores->copy()
-		ignore_dirsfiles->map((_, val) => $'-E {val}')
-		const dirsfiles = ignore_dirsfiles->join()
-		# echom dirsfiles
-		return $'fd -d4 -tf {dirsfiles} {root}'
+    var dirsfiles: string = ''
+    var droot: string = ''
+
+    if &wildignore != ''
+        const ignores = &wildignore->split(",")
+        final ignore_dirsfiles = ignores->copy()
+        ignore_dirsfiles->map((_, val) => $"-E '{val}'")
+        dirsfiles = ignore_dirsfiles->join(' ')
     endif
+
+    if root == '.'
+        return $'fd -d4 -tf {dirsfiles}'
+    endif
+
+    if root == '1'
+        droot = getcwd()->fnamemodify(':~:h')
+    elseif root == '2'
+        droot = getcwd()->fnamemodify(':~:h:h')
+    elseif root == '3'
+        droot = getcwd()->fnamemodify(':~:h:h:h')
+    elseif root ==? 'pwd'
+        droot = getenv('PWD')->fnamemodify(':~')
+    else
+        droot = root
+    endif
+    # echom dirsfiles droot
+
+    return $'fd -d4 -tf {dirsfiles} . {droot}'
 enddef

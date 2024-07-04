@@ -21,13 +21,13 @@ nnoremap <Plug>(FzyGitFiles) <Cmd>FzyGitFiles<CR>
 nnoremap <Plug>(FzyCommand) <Cmd>FzyCommand<CR>
 
 if g:->get('minifuzzy_all_mapps', 1)
-    nnoremap <C-p>      <Plug>(FzyFind)
-    nnoremap <leader>fb <Plug>(FzyBuffers)
-    nnoremap <leader>ff <Plug>(FzyFind)
-    nnoremap <leader>fg <Plug>(FzyGitFiles)
-    nnoremap <leader>fl <Plug>(FzyLines)
-    nnoremap <leader>fm <Plug>(FzyMRU)
+    nnoremap <C-p>      <Cmd>FzyFind<Space>PWD<CR>
+    nnoremap <Leader>fb <Plug>(FzyBuffers)
+    nnoremap <Leader>ff <Plug>(FzyFind)
+    nnoremap <Leader>fg <Plug>(FzyGitFiles)
+    nnoremap <Leader>fl <Plug>(FzyLines)
+    nnoremap <Leader>fm <Plug>(FzyMRU)
 endif
 
-cnoremap <silent> <C-b>   <C-\>eminifuzzy#finders#StoreOldCmd()<CR><ESC>:FzyCommand<CR>
-cnoremap <silent> <C-Tab> <C-\>eminifuzzy#finders#StoreOldCmd()<CR><ESC>:FzyCommand<CR>
+cnoremap <silent> <C-b>   <C-\>eminifuzzy#finders#StoreOldCmd()<CR><Esc>:FzyCommand<CR>
+cnoremap <silent> <C-Tab> <C-\>eminifuzzy#finders#StoreOldCmd()<CR><Esc>:FzyCommand<CR>
