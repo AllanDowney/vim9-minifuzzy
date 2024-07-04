@@ -7,12 +7,13 @@ import './callbacks.vim'
 const InitFuzzyFind = minifuzzy.InitFuzzyFind
 
 export def GitFiles()
-    InitFuzzyFind(systemlist('git ls-files'), { title: $'GIT: {utils.GetCurrentDirectory()}/' })
+    InitFuzzyFind(systemlist('git ls-files'), {
+		title: $'GIT: {utils.GetCurrentDirectory()}/' })
 enddef
 
 export def MRU()
     InitFuzzyFind(utils.GetMRU(
-		get(g:, 'minifuzzy_MRU_limit', 10)), { title: 'MRU' })
+		g:->get('minifuzzy_MRU_limit', 10)), { title: 'MRU' })
 enddef
 
 # Command functions
