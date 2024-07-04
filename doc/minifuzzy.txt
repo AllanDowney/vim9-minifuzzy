@@ -142,6 +142,18 @@ The bar indicates where the cursor will be placed.
         nnoremap <leader>fg <Plug>(FzyGitFiles)
         nnoremap <leader>fc <Plug>(FzyCommand)
 <
+                                *g:minifuzzy_popup_maxheight*
+|g:minifuzzy_popup_maxheight|   number    (default 20)
+    Set the maximum height of the pop-up if there are too many lists.
+    The result plus 1.
+>
+        vim9script
+        g:minifuzzy_popup_maxheight = 30
+        # then popup_height is 31
+
+        g:minifuzzy_popup_maxheight = 29
+        # then popup_height is 30
+<
 
 ====================================================================
 3. Custom Prompts                                    *MinifuzzyCustom*

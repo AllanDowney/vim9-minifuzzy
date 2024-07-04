@@ -174,8 +174,10 @@ const fuzzy_find_default_options = {
     ctrl_t_cb: callbacks.TabeditArg,        # <C-T> Callback, ctrl_t_cb(val) is executed
     cancel_cb: callbacks.DefaultCancel,    # <Esc> Callback, cancel_cb() is executed
     title: 'Minifuzzy',                    # Title for the popup window
-    filetype: '',                          # If non-empty, use filetype syntax highlight in window
-    results_to_display: 20,                # Number of lines for showing values
+	# If non-empty, use filetype syntax highlight in window
+    filetype: '',
+	# Number of lines for showing values
+    results_to_display: g:->get('minifuzzy_popup_maxheight', 20),
 }
 export def InitFuzzyFind(values: list<string>, options: dict<any>)
     # Skip on empty values, may be an issue with async
