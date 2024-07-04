@@ -182,7 +182,7 @@ Additionally, if needed, |cancel_cb| will be called after <Esc> is
 pressed and the window is closed.
 
 |title| will be used as the title for the popup window. If |filetype|
-if provided and not an empty string, the 'filetype' will be applied
+is provided and not an empty string, the 'filetype' will be applied
 to the popup window, to allow syntax highlighting and such.
 
 |results_to_display| denotes how many lines in the popup window are
