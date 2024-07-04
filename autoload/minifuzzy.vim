@@ -78,7 +78,7 @@ def FilterCallback(winid: number, key: string): bool
     # Select best match and exit close window
     # <CR>, <C-V>, <C-X>
     if key == "\<CR>" || key == "\<C-x>" || key == "\<C-v>" || key == "\<C-t>"
-		# <Enter>
+        # <Enter>
         # No need to update display_matches, nothing will be displayed after
         # <CR> is pressed.
         UpdateMatches(search_string)
@@ -174,9 +174,9 @@ const fuzzy_find_default_options = {
     ctrl_t_cb: callbacks.TabeditArg,        # <C-T> Callback, ctrl_t_cb(val) is executed
     cancel_cb: callbacks.DefaultCancel,    # <Esc> Callback, cancel_cb() is executed
     title: 'Minifuzzy',                    # Title for the popup window
-	# If non-empty, use filetype syntax highlight in window
+    # If non-empty, use filetype syntax highlight in window
     filetype: '',
-	# Number of lines for showing values
+    # Number of lines for showing values
     results_to_display: g:->get('minifuzzy_popup_maxheight', 20),
 }
 export def InitFuzzyFind(values: list<string>, options: dict<any>)
@@ -215,12 +215,14 @@ export def InitFuzzyFind(values: list<string>, options: dict<any>)
         maxheight: results_to_display + 1,
         border: [],
         borderchars: ['─', '│', '─', '│', '╭', '╮', '╯', '╰'],
+        borderhighlight: get(g:, 'minifuzzy_popup_borderhighlight', []),
         padding: [0, 4, 0, 1],
         scrollbar: 0,
         wrap: 0,
         title: $' {title} {total_results}/{total_results} ',
     }
-    const popup_id = popup_create(['> '] + output_list->mapnew((_, v) => Format_callback(v)), popup_opts)
+    const popup_id = popup_create(['> '] +
+        output_list->mapnew((_, v) => Format_callback(v)), popup_opts)
 
     # Add syntax highlighting if requested
     const bufnr = winbufnr(popup_id)
@@ -229,7 +231,7 @@ export def InitFuzzyFind(values: list<string>, options: dict<any>)
     # Add highlight line text prop
     prop_type_add('match', {
         bufnr: bufnr,
-        highlight: 'Search',
+        highlight: get(g:, 'minifuzzy_select_highlight', 'Search'),
     })
     prop_add(2, 1, { length: max_option_length, type: 'match', bufnr: bufnr })
 enddef

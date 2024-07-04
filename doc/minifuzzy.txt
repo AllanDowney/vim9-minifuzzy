@@ -169,6 +169,16 @@ The bar indicates where the cursor will be placed.
         g:minifuzzy_popup_maxheight = 29
         # then popup_height is 30
 <
+                                *g:minifuzzy_popup_borderhighlight*
+|g:minifuzzy_popup_borderhighlight|      list<string>
+                                         (default empty)
+    List of highlight group names to use for the border.
+    See also  |popup_create-arguments|.
+
+                                *g:minifuzzy_select_highlight*
+|g:minifuzzy_select_highlight|        string  (default 'Search')
+    The highlight groupname used for line text prop.
+    See also |highlight-groups|.
 
 ====================================================================
 3. Custom Prompts                                    *MinifuzzyCustom*
