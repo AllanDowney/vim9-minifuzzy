@@ -26,14 +26,44 @@ nnoremap <Plug>(FzyLines) <Cmd>FzyLines<CR>
 nnoremap <Plug>(FzyGitFiles) <Cmd>FzyGitFiles<CR>
 nnoremap <Plug>(FzyCommand) <Cmd>FzyCommand<CR>
 
+cnoremap <Plug>(FzyCmdComplete)  <C-\>eminifuzzy#finders#StoreOldCmd()<CR><Esc>:FzyCommand<CR>
+
 if g:->get('minifuzzy_all_mapps', 1)
-    nnoremap <C-p>      <Cmd>FzyFind<Space>PWD<CR>
-    nnoremap <Leader>fb <Plug>(FzyBuffers)
-    nnoremap <Leader>ff <Plug>(FzyFind)
-    nnoremap <Leader>fg <Plug>(FzyGitFiles)
-    nnoremap <Leader>fl <Plug>(FzyLines)
-    nnoremap <Leader>fm <Plug>(FzyMRU)
+	if !hasmapto('<Plug>(FzyBuffers)', 'n')
+		nnoremap <Leader>fb <Plug>(FzyBuffers)
+	endif
+	if !hasmapto('<Plug>(FzyCommand)', 'n')
+		nnoremap <Leader>fc <Plug>(FzyCommand)
+	endif
+	if !hasmapto('<Plug>(FzyFind)', 'n')
+		nnoremap <Leader>ff <Plug>(FzyFind)
+	endif
+	if !hasmapto('<Cmd>FzyFind<Space>PWD<CR>', 'n')
+		nnoremap <Leader>fp <Cmd>FzyFind<Space>PWD<CR>
+	endif
+	if !hasmapto('<Cmd>FzyFind<Space>1<CR>', 'n')
+		nnoremap <Leader>f1 <Cmd>FzyFind<Space>1<CR>
+	endif
+	if !hasmapto('<Cmd>FzyFind<Space>2<CR>', 'n')
+		nnoremap <Leader>f2 <Cmd>FzyFind<Space>2<CR>
+	endif
+	if !hasmapto('<Cmd>FzyFind<Space>3<CR>', 'n')
+		nnoremap <Leader>f3 <Cmd>FzyFind<Space>3<CR>
+	endif
+	if !hasmapto('<Plug>(FzyGitFiles)', 'n')
+		nnoremap <Leader>fg <Plug>(FzyGitFiles)
+	endif
+	if !hasmapto('<Plug>(FzyLines)', 'n')
+		nnoremap <Leader>fl <Plug>(FzyLines)
+	endif
+	if !hasmapto('<Plug>(FzyMRU)', 'n')
+		nnoremap <Leader>fm <Plug>(FzyMRU)
+	endif
+	if !hasmapto('<Plug>(FzyCmdComplete)', 'c')
+		cnoremap <silent> <C-P>   <Plug>(FzyCmdComplete)
+	endif
+	if !hasmapto('<Plug>(FzyCmdComplete)', 'c')
+		cnoremap <silent> <C-Tab> <Plug>(FzyCmdComplete)
+	endif
 endif
 
-cnoremap <silent> <C-b>   <C-\>eminifuzzy#finders#StoreOldCmd()<CR><Esc>:FzyCommand<CR>
-cnoremap <silent> <C-Tab> <C-\>eminifuzzy#finders#StoreOldCmd()<CR><Esc>:FzyCommand<CR>
