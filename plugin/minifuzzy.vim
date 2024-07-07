@@ -6,6 +6,12 @@ vim9script
 
 import autoload "../autoload/minifuzzy/finders.vim"
 
+if exists('g:loaded_minifuzzy')
+	finish
+endif
+
+g:loaded_minifuzzy = 1
+
 command! -nargs=* -complete=dir FzyFind finders.Find(<q-args>)
 command! FzyBuffers                     finders.Buffers()
 command! FzyMRU                         finders.MRU()
