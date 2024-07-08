@@ -12,7 +12,10 @@ export def GetMRU(limit: number): list<string>
             found += 1
         endif 
     endfor
-    return recently_used
+    return recently_used->reduce((acc, val) => {
+		acc->add(fnamemodify(val, ':~:.'))
+		return acc
+		}, [])
 enddef
 
 # Returns just the cwd last directory name
@@ -42,7 +45,7 @@ export def BuildFindCommand(root: string): string
         droot = getcwd()->fnamemodify(':~:h:h')
     elseif root == '3'
         droot = getcwd()->fnamemodify(':~:h:h:h')
-    elseif root ==? 'pwd'
+    elseif root ==? 'pwd' || !isdirectory(expand(root))
         droot = getenv('PWD')->fnamemodify(':~')
     else
         droot = root

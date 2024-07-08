@@ -20,7 +20,10 @@ enddef
 export def Find(directory: string)
     const root = directory == '' ? '.' : directory
     const files = systemlist(utils.BuildFindCommand(root))
-    InitFuzzyFind(files, { title: $'{utils.GetCurrentDirectory()}/' })
+    InitFuzzyFind(files->reduce((acc, val) => {
+	    acc->add(fnamemodify(val, ':~:.'))
+	    return acc
+    }, []), { title: $'{utils.GetCurrentDirectory()}/' })
 enddef
 
 export def Buffers()
