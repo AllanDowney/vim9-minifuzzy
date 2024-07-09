@@ -35,17 +35,17 @@ finding mechanism.
 --------------------------------------------------------------------
 2.1. Quickstart                                  *MinifuzzyQuickstart*
 
-To begin using minifuzzy.vim, press <leader>ff to fuzzy find in the
+To begin using minifuzzy.vim, press <Leader>ff to fuzzy find in the
 current working directory |pwd|. minifuzzy.vim will open a popup window
-for fuzzy finding. Press <ESC> to close this window.
+for fuzzy finding. Press <Esc> to close this window.
 
 Begin typing to narrow the selection down to what you want. Your
 current selection will be highlighted. Pressing <CR> will select
 the currently highlighted file and open it.
 
-Pressing <C-u> will clear the search query but not close the window.
+Pressing <C-U> will clear the search query but not close the window.
 
-To select the next or previous best options, use <C-n> or <C-p>.
+To select the next or previous best options, use <C-N> or <C-P>.
 Arrow keys also work.
 
 --------------------------------------------------------------------
@@ -53,25 +53,25 @@ Arrow keys also work.
 
 The following mappings can be used to initiate a fuzzy find:
 
-    <leader>ff ............. Files in current working directory
-    <C-p> .................. Files in print working directory($PWD)
-    <leader>fb ............. Buffers
-    <leader>fm ............. Most recently used files
-    <leader>fl ............. Lines in the current buffer
-    <leader>fg ............. Files in current Git repository
+    <Leader>ff ............. Files in current working directory
+    <Leader>fp ............. Files in print working directory($PWD)
+    <Leader>fb ............. Buffers
+    <Leader>fm ............. Most recently used files
+    <Leader>fl ............. Lines in the current buffer
+    <Leader>fg ............. Files in current Git repository
 
 While the minifuzzy.vim window is open:
 
     <CR> ............. Select the currently highlighted selection
-    <C-x> ............ Same as above but opens in a split
-    <C-v> ............ Same as above but opens in a vertical split
-    <C-t> ............ Same as above but opens in a tabpage
-    <C-u> ............ Clear the search query
-    <ESC> ............ Close the minifuzzy.vim window
-    <C-p> or <Up> .... Put the cursor over the previous option
-    <C-n> or <Down> .. Put the cursor over the next option
+    <C-X> ............ Same as above but opens in a split
+    <C-V> ............ Same as above but opens in a vertical split
+    <C-T> ............ Same as above but opens in a tabpage
+    <C-U> ............ Clear the search query
+    <Esc> ............ Close the minifuzzy.vim window
+    <C-P> or <Up> .... Put the cursor over the previous option
+    <C-N> or <Down> .. Put the cursor over the next option
 
-If in command mode and either <C-Tab> or <C-b> is pressed, a fuzzy
+If in command mode and either <C-Tab> or <C-P> is pressed, a fuzzy
 finder prompt will be created to complete (and replace) the current
 typed token.
 
@@ -79,8 +79,8 @@ typed token.
 
 This will create a fuzzy finder prompt with the values that would
 be expected when trying to autocomplete: `colder` and `colorscheme`.
-Upon selecting a command with <CR> (for example `colorscheme`), the
-new command line will look like this:
+Upon selecting a command with <CR> ( for example: `colorscheme` ),
+the new command line will look like this:
 
     :colorscheme|
 
@@ -97,13 +97,14 @@ The bar indicates where the cursor will be placed.
         ''      The current directory (Default and can be omitted)
                 Mapped to: <leader>ff
         'PWD'   The `$PWD` directory
-                Mapped to: <C-p>
+                Mapped to: <leader>fp
         '1'     The directory one level above the current file
         '2'     The directory two levels up to the current file
         '3'     The upper three directories of the current file
 
-    You can customize. e.g: >
+    You can customize. Default: >
 
+        nnoremap <Leader>ff <Plug>FzyFind
         nnoremap <Leader>fp <Cmd>FzyFind<Space>PWD<CR>
         nnoremap <Leader>f1 <Cmd>FzyFind<Space>1<CR>
         nnoremap <Leader>f2 <Cmd>FzyFind<Space>2<CR>
@@ -136,7 +137,7 @@ The bar indicates where the cursor will be placed.
 
                                         *g:minifuzzy_MRU_limit*
 |g:minifuzzy_MRU_limit|     number    (default 10)
-    The most recently used files numbers for |FzyMRU|
+    The most recently used files numbers for |:FzyMRU|.
 >
         vim9script
         g:minifuzzy_MRU_limit = 50
@@ -191,7 +192,7 @@ has the following signature in |Vim9| script:
 >
     def InitFuzzyFind(values: list<string>, options: dict<any>)
 <
-Where |values| are the possible values to search against and |options|
+Where {values} are the possible values to search against and {options}
 can contain the following keys:
 >
     format_cb:          func(string): string
@@ -204,7 +205,7 @@ can contain the following keys:
     filetype:           string
     results_to_display: number
 <
-|format_cb| gets called on each value in |values| and displays the
+The |format_cb| gets called on each value in {values} and displays the
 return value in the miniterm.vim window.
 
 NOTE: The search query will be matched against format_cb(value),
@@ -213,24 +214,25 @@ not value. By default, format_cb(value) == value.
 |exec_cb| gets called when <CR> is pressed, with the currently
 selected value passed as the only argument. Two additional execution
 callbacks |ctrl_x_cb| |ctrl_v_cb| and |ctrl_t_cb| can be called when
-<C-x> <C-v> or <C-t> are pressed, respectively.
+<C-X> <C-V> or <C-T> are pressed, respectively.
 
 Additionally, if needed, |cancel_cb| will be called after <Esc> is
 pressed and the window is closed.
 
-|title| will be used as the title for the popup window. If |filetype|
+{title} will be used as the title for the popup window. If {filetype}
 is provided and not an empty string, the 'filetype' will be applied
 to the popup window, to allow syntax highlighting and such.
 
 |results_to_display| denotes how many lines in the popup window are
 dedicated to showing results before scrolling is required.
+See also |g:minifuzzy_popup_maxheight|.
 
 Example:                                     *MinifuzzyCustomExamples*
 >
     com! MyCustomFuzzy call minifuzzy#InitFuzzyFind(['a', 'b'], {
         \ 'exec_cb': {s -> execute('edit ' . s)} })
 <
-This command will call |:edit| on the selected value from ['a', 'b'].
+This command will call `:edit` on the selected value from ['a', 'b'].
 >
     let bufnrs = getbufinfo()->map('string(v:val.bufnr)')
     com! FuzBufs call minifuzzy#InitFuzzyFind(bufnrs, {
@@ -240,7 +242,7 @@ This command will call |:edit| on the selected value from ['a', 'b'].
 This command collects all buffer numbers and creates a minifuzzy.vim
 window that matches against the buffers' names. When <CR> is
 pressed, the buffer name that was selected will have its buffer
-number passed to |:echo|.
+number passed to `:echo`.
 
 Here is an example using |vim9|.
 >
@@ -252,7 +254,7 @@ Here is an example using |vim9|.
 <
 This command uses the |getcompletion| function to get a list of the
 colorschemes available. When <CR> is pressed, the selected
-colorscheme is passed as the argument to the |:colorscheme| command.
+colorscheme is passed as the argument to the `:colorscheme` command.
 
 ====================================================================
 4. About                                              *MinifuzzyAbout*
