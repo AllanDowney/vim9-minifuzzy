@@ -7,7 +7,8 @@ import './callbacks.vim'
 const InitFuzzyFind = minifuzzy.InitFuzzyFind
 
 export def GitFiles()
-    InitFuzzyFind(systemlist('git ls-files'), {
+	const gtop = system('git rev-parse --show-toplevel')
+	InitFuzzyFind(systemlist($'git ls-files {gtop}'), {
 		title: $'GIT: {utils.GetCurrentDirectory()}/' })
 enddef
 
