@@ -54,7 +54,6 @@ Arrow keys also work.
 The following mappings can be used to initiate a fuzzy find:
 
     <Leader>ff ............. Files in current working directory
-    <Leader>fp ............. Files in print working directory($PWD)
     <Leader>fb ............. Buffers
     <Leader>fm ............. Most recently used files
     <Leader>fl ............. Lines in the current buffer
@@ -96,19 +95,14 @@ The bar indicates where the cursor will be placed.
     {directory} can have the following values:
         ''      The current directory (Default and can be omitted)
                 Mapped to: <leader>ff
-        'PWD'   The `$PWD` directory
-                Mapped to: <leader>fp
         '1'     The directory one level above the current file
         '2'     The directory two levels up to the current file
-        '3'     The upper three directories of the current file
 
     You can customize. Default: >
 
         nnoremap <Leader>ff <Plug>FzyFind
-        nnoremap <Leader>fp <Cmd>FzyFind<Space>PWD<CR>
         nnoremap <Leader>f1 <Cmd>FzyFind<Space>1<CR>
         nnoremap <Leader>f2 <Cmd>FzyFind<Space>2<CR>
-        nnoremap <Leader>f3 <Cmd>FzyFind<Space>3<CR>
 <
 |:FzyBuffers|
     Fuzzy find through buffers currently listed. Excludes the

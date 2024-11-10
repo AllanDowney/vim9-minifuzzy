@@ -13,9 +13,9 @@ export def GetMRU(limit: number): list<string>
         endif 
     endfor
     return recently_used->reduce((acc, val) => {
-		acc->add(fnamemodify(val, ':~:.'))
-		return acc
-		}, [])
+        acc->add(fnamemodify(val, ':~:.'))
+        return acc
+        }, [])
 enddef
 
 # Returns just the cwd last directory name
@@ -35,22 +35,22 @@ export def BuildFindCommand(root: string): string
         dirsfiles = ignore_dirsfiles->join(' ')
     endif
 
-    if root == '.'
-        return $'fd -d4 -tf {dirsfiles}'
-    endif
-
     if root == '1'
-        droot = getcwd()->fnamemodify(':~:h')
+        execute "lcd ../"
+        droot = '.'
     elseif root == '2'
-        droot = getcwd()->fnamemodify(':~:h:h')
-    elseif root == '3'
-        droot = getcwd()->fnamemodify(':~:h:h:h')
-    elseif root ==? 'pwd' || !isdirectory(expand(root))
+        execute "lcd ../../"
+        droot = '.'
+    elseif !isdirectory(expand(root))
         droot = getenv('PWD')->fnamemodify(':~')
     else
         droot = root
     endif
-    # echom dirsfiles droot
 
-    return $'fd -d4 -tf {dirsfiles} . {droot}'
+    if droot == '.'
+        return $'fd -d4 -tf {dirsfiles}'
+    else
+        return $'fd -d4 -tf {dirsfiles} . {droot}'
+    endif
+
 enddef

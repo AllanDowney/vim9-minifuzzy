@@ -38,17 +38,11 @@ if g:->get('minifuzzy_all_mapps', 1)
 	if !hasmapto('<Plug>(FzyFind)', 'n')
 		nnoremap <Leader>ff <Plug>(FzyFind)
 	endif
-	if !hasmapto('<Cmd>FzyFind<Space>PWD<CR>', 'n')
-		nnoremap <Leader>fp <Cmd>FzyFind<Space>PWD<CR>
-	endif
 	if !hasmapto('<Cmd>FzyFind<Space>1<CR>', 'n')
 		nnoremap <Leader>f1 <Cmd>FzyFind<Space>1<CR>
 	endif
 	if !hasmapto('<Cmd>FzyFind<Space>2<CR>', 'n')
 		nnoremap <Leader>f2 <Cmd>FzyFind<Space>2<CR>
-	endif
-	if !hasmapto('<Cmd>FzyFind<Space>3<CR>', 'n')
-		nnoremap <Leader>f3 <Cmd>FzyFind<Space>3<CR>
 	endif
 	if !hasmapto('<Plug>(FzyGitFiles)', 'n')
 		nnoremap <Leader>fg <Plug>(FzyGitFiles)
