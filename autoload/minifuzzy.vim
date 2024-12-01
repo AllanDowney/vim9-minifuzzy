@@ -119,7 +119,7 @@ def FilterCallback(winid: number, key: string): bool
         var backspace = false
         if key == "\<C-u>" # <C-u> Clear whole line
             search_string = ""
-        elseif key == "\<BS>" # <BS> Remove last letter
+        elseif key == "\<BS>" || key == "\<C-h>" # <BS> Remove last letter
             search_string = substitute(search_string, ".$", "", "")
             backspace = true
         else # any other key
