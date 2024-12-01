@@ -26,14 +26,25 @@ enddef
 
 export def BuildFindCommand(root: string): string
     var dirsfiles: string = ''
+	var ignore_dirs = ['.git']
     var droot: string = ''
 
     if &wildignore != ''
         const ignores = &wildignore->split(",")
-        final ignore_dirsfiles = ignores->copy()
-        ignore_dirsfiles->map((_, val) => $"-E '{val}'")
-        dirsfiles = ignore_dirsfiles->join(' ')
+		ignore_dirs->extend(ignores)
+
     endif
+
+	var exdd = g:->get('minifuzzy_find_exclude', [])
+	if len(exdd) > 0
+		ignore_dirs->extend(exdd)
+	endif
+
+	dirsfiles = ignore_dirs
+		->flattennew()
+		->mapnew((_, val) => $"-E {val}")
+		->join(' ')
+	dirsfiles = $' {dirsfiles} '
 
     if root == '1'
         execute "lcd ../"
@@ -47,10 +58,14 @@ export def BuildFindCommand(root: string): string
         droot = root
     endif
 
-    if droot == '.'
-        return $'fd -d4 -tf {dirsfiles}'
-    else
-        return $'fd -d4 -tf {dirsfiles} . {droot}'
-    endif
+	if droot != '.'
+		droot = $' . {droot}'
+	else
+		droot = ''
+	endif
 
+	var hidef = g:->get('minifuzzy_find_hidden', false) ? '-H' : ''
+	var fddl = g:->get('minifuzzy_find_level', '-d4')
+
+	return $'fd {hidef} {fddl} -tf{dirsfiles}{droot}'
 enddef

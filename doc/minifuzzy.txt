@@ -48,6 +48,8 @@ Pressing <C-U> will clear the search query but not close the window.
 To select the next or previous best options, use <C-N> or <C-P>.
 Arrow keys also work.
 
+Dependent on `fd`.
+
 --------------------------------------------------------------------
 2.2. Mappings                                      *MinifuzzyMappings*
 
@@ -174,6 +176,32 @@ The bar indicates where the cursor will be placed.
 |g:minifuzzy_select_highlight|        string  (default 'Search')
     The highlight groupname used for line text prop.
     See also |highlight-groups|.
+
+                                *g:minifuzzy_find_hidden*
+|g:minifuzzy_find_hidden|           boolean  (default false)
+    Include hidden directories and files in the search results
+
+                                *g:minifuzzy_find_level*
+|g:minifuzzy_find_level|           string  (default '-d4')
+    Limit the directory traversal to a given depth.
+    By default, there is limit 4 on the search depth.
+>
+    vim9script
+    g:minifuzzy_find_level = '-d2'
+<
+    Or no limit
+>
+    vim9script
+    g:minifuzzy_find_level = ''
+<
+                                *g:minifuzzy_find_exclude*
+|g:minifuzzy_find_exclude|           list<string>  (default empty)
+    Exclude files/directories that match the given glob pattern.
+    The default '.git' is always excluded.
+>
+    vim9script
+    g:minifuzzy_find_exclude = ['.cache', '.npm']
+<
 
 ====================================================================
 3. Custom Prompts                                    *MinifuzzyCustom*

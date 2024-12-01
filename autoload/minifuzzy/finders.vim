@@ -17,14 +17,44 @@ export def MRU()
 		g:->get('minifuzzy_MRU_limit', 10)), { title: 'MRU' })
 enddef
 
+var jid: job
+var files: list<string> = []
+var dirstr = ''
+def JobHandler(ch: channel, msg: string)
+	files->add(msg)
+enddef
+
+def JobClose(ch: channel)
+	UpdateList()
+enddef
+
+def UpdateList()
+	var accopt = ':~:.'
+	if dirstr == "1" || dirstr == "2"
+		accopt = ":~"
+	endif
+    InitFuzzyFind(files->reduce((acc, val) => {
+		acc->add(fnamemodify(val, $'{accopt}'))
+	    return acc
+    }, []), { title: $'{utils.GetCurrentDirectory()}/' })
+enddef
+
 # Command functions
 export def Find(directory: string)
     const root = directory == '' ? '.' : directory
-    const files = systemlist(utils.BuildFindCommand(root))
-    InitFuzzyFind(files->reduce((acc, val) => {
-	    acc->add(fnamemodify(val, ':~:.'))
-	    return acc
-    }, []), { title: $'{utils.GetCurrentDirectory()}/' })
+	dirstr = directory
+
+	if job_status(jid) == 'run'
+		files = []
+		job_stop(jid)
+	endif
+
+	jid = job_start(utils.BuildFindCommand(root), {
+		out_cb: 'JobHandler',
+		close_cb: 'JobClose',
+		cwd: getcwd()
+	})
+	files = []
 enddef
 
 export def Buffers()
